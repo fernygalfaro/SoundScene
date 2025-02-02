@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SoundScene: Discover personalized movie and music recommendations.">
+    <title>SoundScene</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <header role="banner">
+        <a href="{{ url_for('main.home') }}">
+            <img src="{{ url_for('static', filename='Pictures/SoundSceneLogo.png') }}" alt="SoundScene Logo" class="soundscenelogo">
+        </a>
+        <a href="{{ url_for('main.home') }}"><h1 id="clicktitle">SoundScene</h1></a>
+        <div class="topnav">
+            <button id="openSearchBtn" class="search-btn">Search</button>
+        </div>
+
+        <div id="searchModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form action="{{ url_for('main.search') }}" method="GET">
+                    <input type="text" name="query" placeholder="Search..." value="{{ request.args.get('query', '') }}">
+                    <div class="dropdown">
+                        <button class="dropbtn">Filter out Genre</button>
+                        <div class="dropdown-content">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Action" name="genres" value="28">
+                                <label for="Action">Action</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Animation" name="genres" value="16">
+                                <label for="Animation">Animation</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Adventure" name="genres" value="12">
+                                <label for="Adventure">Adventure</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Comedy" name="genres" value="35">
+                                <label for="Comedy">Comedy</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Horror" name="genres" value="27">
+                                <label for="Horror">Horror</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Fantasy" name="genres" value="14">
+                                <label for="Fantasy">Fantasy</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Family" name="genres" value="10751">
+                                <label for="Family">Family</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="War" name="genres" value="10752">
+                                <label for="War">War</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Drama" name="genres" value="18">
+                                <label for="Drama">Drama</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Documentary" name="genres" value="99">
+                                <label for="Documentary">Documentary</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="ScienceFiction" name="genres" value="878">
+                                <label for="ScienceFiction">Science Fiction</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Romance" name="genres" value="10749">
+                                <label for="Romance">Romance</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Crime" name="genres" value="80">
+                                <label for="Crime">Crime</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="History" name="genres" value="36">
+                                <label for="History">History</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Western" name="genres" value="37">
+                                <label for="Western">Western</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="TVMovie" name="genres" value="10770">
+                                <label for="TVMovie">TV Movie</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Thriller" name="genres" value="53">
+                                <label for="Thriller">Thriller</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Music" name="genres" value="10402">
+                                <label for="Music">Music</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="Mystery" name="genres" value="9648">
+                                <label for="Mystery">Mystery</label>
+                            </div>
+                        </div>                        
+                    </div>
+                    <button type="submit">Search</button>
+                    <button type="submit">Don't personalize search</button>
+                </form>
+            </div>
+        </div>
+    </header>
+    <div class="main-content" role="main">
+        <h2>Discover Movies</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form action="{{ url_for('main.discover_movies') }}" method="POST">
+            <h3>Questionnaire for Movie Recommendation</h3>
+            <div id="genres_ids">
+                <label><input type="checkbox" name="genres_ids" value="28"> Action</label>
+                <label><input type="checkbox" name="genres_ids" value="35"> Comedy</label>
+                <label><input type="checkbox" name="genres_ids" value="18"> Drama</label>
+                <label><input type="checkbox" name="genres_ids" value="27"> Horror</label>
+                <label><input type="checkbox" name="genres_ids" value="10749"> Romance</label>
+                <label><input type="checkbox" name="genres_ids" value="878"> Science Fiction</label>
+                <label><input type="checkbox" name="genres_ids" value="14"> Fantasy</label>
+                <label><input type="checkbox" name="genres_ids" value="99"> Documentary</label>
+                <label><input type="checkbox" name="genres_ids" value="16"> Animation</label>
+            </div>
+            <div>
+                <label for="certifications">Select certifications:</label>
+                <div id="certifications">
+                    <label><input type="checkbox" name="certifications" value="G"> G</label>
+                    <label><input type="checkbox" name="certifications" value="PG"> PG</label>
+                    <label><input type="checkbox" name="certifications" value="PG-13"> PG-13</label>
+                    <label><input type="checkbox" name="certifications" value="R"> R</label>
+                </div>
+            </div>
+            <div>
+                <label for="language">Preferred language:</label>
+                <div id="language">
+                    <label><input type="checkbox" name="language" value="en"> English</label>
+                    <label><input type="checkbox" name="language" value="zh, fr, ja, es, bn, ko, sv"> Foreign</label>
+                </div>
+            </div>
+            <div>
+                <label for="cast">Filter by cast:</label>
+                <input type="text" name="cast" id="cast" placeholder="Enter actor name">
+            </div>
+            <div>
+                <label for="director">Filter by director:</label>
+                <input type="text" name="director" id="director" placeholder="Enter director name">
+            </div>
+            <div>
+                <label for="keywords">Filter by keywords:</label>
+                <div id="keywords">
+                    <label><input type="checkbox" name="keywords" value="Superhero"> Superhero</label>
+                    <label><input type="checkbox" name="keywords" value="Fantasy"> Fantasy</label>
+                    <label><input type="checkbox" name="keywords" value="Drama"> Drama</label>
+                    <label><input type="checkbox" name="keywords" value="Romance"> Romance</label>
+                </div>
+            </div>
+            <div>
+                <label for="production_companies">Filter by production companies:</label>
+                <div id="production_companies">
+                    <label><input type="checkbox" name="production_companies" value="Marvel Studios"> Marvel Studios</label>
+                    <label><input type="checkbox" name="production_companies" value="Warner Bros."> Warner Bros.</label>
+                    <label><input type="checkbox" name="production_companies" value="20th Century Studios"> 20th Century Studios</label>
+                    <label><input type="checkbox" name="production_companies" value="Universal Pictures"> Universal Pictures</label>
+                </div>
+            </div>
+            <div>
+                <label for="vote_count">Minimum vote count:</label>
+                <input type="number" name="vote_count" id="vote_count" placeholder="Enter minimum vote count">
+            </div>
+            <div>
+                <label for="release_year_min">Release year range:</label>
+                <input type="number" name="release_year_min" id="release_year_min" placeholder="Enter minimum year">
+                <input type="number" name="release_year_max" id="release_year_max" placeholder="Enter maximum year">
+            </div>
+            <div>
+                <label for="duration">Duration range:</label>
+                <div id="duration">
+                    <label><input type="checkbox" name="duration" value="short"> Less than 90 minutes</label>
+                    <label><input type="checkbox" name="duration" value="medium"> 90-120 minutes</label>
+                    <label><input type="checkbox" name="duration" value="long"> Longer than 120 minutes</label>
+                </div>
+            </div>
+            <button type="submit">Find a Recommendation</button>
+        </form>
+    </div>
+    <footer role="contentinfo">
+        <p>&copy; 2024 SoundScene. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,7 +1,7 @@
 # SoundScene
 
 SoundScene is a streaming platform where users can enjoy movies, discover new music, and share their favorite content with their community.
-
+![Image](https://github.com/user-attachments/assets/f4bed8a2-f532-4770-8202-3a246b0734bf)
 ## Features
 - Access the latest movies and music, as well as timeless classics.
 - A unique **"Don't Personalize"** feature that prevents content recommendations from being influenced by niche searches.

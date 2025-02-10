@@ -15,6 +15,7 @@ SoundScene is a streaming platform where users can enjoy movies, discover new mu
 Make sure you have the following installed:
 - **Python 3.x** – Check with `python --version` or `python3 --version`
 - **pip** – Python package manager
+- **Flask** – Python web framework
 
 ### Installation
 1. Clone the repository to your preferred directory:
